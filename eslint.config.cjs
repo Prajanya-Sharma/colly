@@ -35,6 +35,20 @@ module.exports = [
       '**/*.mjs',
     ],
     // Override or add rules here
-    rules: {},
+    rules: {
+      '@nx/enforce-module-boundaries': [
+        'off', // Turn off this rule for now
+        {
+          enforceBuildableLibDependency: true,
+          allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?js$'],
+          depConstraints: [
+            {
+              sourceTag: '*',
+              onlyDependOnLibsWithTags: ['*'],
+            },
+          ],
+        },
+      ],
+    },
   },
 ];
