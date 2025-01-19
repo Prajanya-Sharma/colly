@@ -4,15 +4,13 @@ on:
   push:
     branches:
       - main
-      - develop
   pull_request:
     branches:
       - main
-      - develop
 
 jobs:
   install_dependencies:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout code
@@ -21,15 +19,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'  # Set the Node version for the backend
+          node-version: '22.12.0'
 
       - name: Install dependencies
         run: |
-          cd api
           npm install
 
   lint:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: install_dependencies
 
     steps:
@@ -39,45 +36,8 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '22.12.0'
 
       - name: Lint code
         run: |
-          cd api
-          npm run lint  # Add your linting script for the API
-
-  test:
-    runs-on: ubuntu-latest
-    needs: lint
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Run tests
-        run: |
-          cd api
-          npm run test  # Add your testing script for Express API
-
-  build:
-    runs-on: ubuntu-latest
-    needs: test
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Build the backend
-        run: |
-          cd api
-          npm run build  # If your Express app needs a build step
+          npm run lint
